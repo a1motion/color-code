@@ -1,0 +1,21 @@
+version: 2
+
+steps:
+  run:
+    - 'yarn install'
+    - 'yarn lint'
+    - 'yarn test'
+
+jobs:
+  - uses:
+      node: 8
+    steps:
+      '&run'
+  - uses:
+      node: 10
+    steps:
+      '&run'
+  - uses:
+      node: 12
+    steps:
+      '&run'

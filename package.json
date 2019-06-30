@@ -1,0 +1,26 @@
+{
+  "name": "@a1motion/color-code",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/a1motion/color-code",
+  "author": "Connor Love <connor@dotconnor.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --format=pretty '**/*.js'",
+    "test": "ava --verbose"
+  },
+  "devDependencies": {
+    "ava": "^2.1.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "eslint-config-a1motion": "^2.2.1",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-formatter-pretty": "^2.1.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "prettier": "^1.17.1"
+  },
+  "dependencies": {
+    "escape-html": "^1.0.3"
+  }
+}
