@@ -7,7 +7,10 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --format=pretty '**/*.js'",
-    "test": "ava --verbose"
+    "test": "nyc --reporter=lcov --reporter=text ava --verbose"
+  },
+  "dependencies": {
+    "escape-html": "^1.0.3"
   },
   "devDependencies": {
     "ava": "^2.1.0",
@@ -18,9 +21,7 @@
     "eslint-formatter-pretty": "^2.1.1",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.13.0",
+    "nyc": "^14.1.1",
     "prettier": "^1.17.1"
-  },
-  "dependencies": {
-    "escape-html": "^1.0.3"
   }
 }

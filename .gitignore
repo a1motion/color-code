@@ -1,1 +1,11 @@
-node_modules/*
+node_modules/
+.eslintcache
+.nyc_output
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+coverage
+*.lcov
