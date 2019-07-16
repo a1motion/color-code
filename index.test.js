@@ -102,3 +102,20 @@ test(`look by id with bright background-colors`, (t) => {
 test(`return nothing when its a incorrect id type`, (t) => {
   t.is(colorCode(`\u001b[38;3;9mTest`), `Test`);
 });
+
+test(`respects no html options background`, (t) => {
+  t.is(
+    colorCode(`\u001b[48;5;9mTest`, {
+      noHtml: true,
+    }),
+    `Test`
+  );
+});
+test(`respects no html options foreground`, (t) => {
+  t.is(
+    colorCode(`\u001b[38;5;9mTest`, {
+      noHtml: true,
+    }),
+    `Test`
+  );
+});

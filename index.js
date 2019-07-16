@@ -4,9 +4,10 @@ const scanner = require(`./lib/scanner`);
 const parser = require(`./lib/parser`);
 const BASIC_COLORS = require(`./basic.json`);
 
-const fontColor = (color) => `<span style="color:rgb(${color});">`;
-const backgroundColor = (color) =>
-  `<span style="background-color:rgb(${color});">`;
+const fontColor = (color, options) =>
+  options.noHtml ? `` : `<span style="color:rgb(${color});">`;
+const backgroundColor = (color, options) =>
+  options.noHtml ? `` : `<span style="background-color:rgb(${color});">`;
 
 const checkRGBValue = (value) => {
   return (
@@ -37,7 +38,12 @@ const getColorFromParams = (params) => {
   return undefined;
 };
 
-const colorCode = (str) => {
+const defaultOptions = {
+  noHtml: false,
+};
+
+const colorCode = (str, opts) => {
+  const options = Object.assign({}, defaultOptions, opts);
   let tokens = scanner(str);
   tokens = parser(tokens);
   let s = ``;
@@ -45,28 +51,34 @@ const colorCode = (str) => {
   let HAS_CHANGED_COLOR = false;
   let HAS_CHANGED_BACKGROUND = false;
   let LAST_COLOR_USED = null;
+  const reset = (repeat = 1) => {
+    if (!options.noHtml) {
+      s += `</span>`.repeat(repeat);
+    }
+  };
+
   const setColor = (color) => {
     RESETABLE++;
     if (HAS_CHANGED_COLOR) {
       RESETABLE--;
-      s += `</span>`;
+      reset();
     }
 
     LAST_COLOR_USED = [`fg`, color];
     HAS_CHANGED_COLOR = true;
-    s += fontColor(color);
+    s += fontColor(color, options);
   };
 
   const setBackground = (color) => {
     RESETABLE++;
     if (HAS_CHANGED_BACKGROUND) {
       RESETABLE--;
-      s += `</span>`;
+      reset();
     }
 
     LAST_COLOR_USED = [`bg`, color];
     HAS_CHANGED_BACKGROUND = true;
-    s += backgroundColor(color);
+    s += backgroundColor(color, options);
   };
 
   for (const token of tokens) {
@@ -97,7 +109,7 @@ const colorCode = (str) => {
         }
       } else if (parameters[0] === `39`) {
         if (HAS_CHANGED_COLOR) {
-          s += `</span>`;
+          reset();
           if (LAST_COLOR_USED[0] && LAST_COLOR_USED[0] === `bg`) {
             RESETABLE--;
             setBackground(LAST_COLOR_USED[1]);
@@ -112,7 +124,7 @@ const colorCode = (str) => {
         }
       } else if (parameters[0] === `49`) {
         if (HAS_CHANGED_BACKGROUND) {
-          s += `</span>`;
+          reset();
         }
 
         if (LAST_COLOR_USED[0] && LAST_COLOR_USED[0] === `fg`) {
@@ -124,13 +136,13 @@ const colorCode = (str) => {
       } else if (parameters[0] === `0` || parameters.length === 0) {
         HAS_CHANGED_BACKGROUND = false;
         HAS_CHANGED_COLOR = false;
-        s += `</span>`.repeat(RESETABLE);
+        reset(RESETABLE);
         RESETABLE = 0;
       }
     }
   }
 
-  s += `</span>`.repeat(RESETABLE);
+  reset(RESETABLE);
   return s;
 };
 
