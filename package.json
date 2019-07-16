@@ -13,8 +13,8 @@
     "index.js",
     "index.d.ts",
     "basic.json",
-    "lib/",
-    "!lib/*.test.js"
+    "lib/parser.js",
+    "lib/scanner.js"
   ],
   "dependencies": {
     "escape-html": "^1.0.3"
