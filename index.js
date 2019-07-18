@@ -83,7 +83,7 @@ const colorCode = (str, opts) => {
 
   for (const token of tokens) {
     if (token.type === `STRING`) {
-      s += escape(token.value);
+      s += options.noHtml ? token.value : escape(token.value);
     } else if (token.type === `CONTROL`) {
       const { parameters } = token.value;
       if (/^(3[0-7])$/.test(parameters[0])) {
