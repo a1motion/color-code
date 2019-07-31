@@ -1,6 +1,6 @@
 {
   "name": "@a1motion/color-code",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "index.js",
   "repository": "https://github.com/a1motion/color-code",
   "author": "Connor Love <connor@dotconnor.com>",
